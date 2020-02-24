@@ -1,0 +1,65 @@
+<%@page import="login.SessionCheck"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!-- form 태그 줄바꿈 제거 -->
+<style>
+	form {
+	display: inline;
+	}
+</style>
+
+<%
+	// 세션과 쿠키 체크
+	Cookie[] cookie = request.getCookies();
+	boolean check = SessionCheck.loginCheck(session, cookie);
+	// true를 받았을 경우 (로그인 된 상태) 
+	if (check) {
+%>
+
+<p>
+	<form action="/hssweb/etc" method="post">
+		&nbsp<input type="submit" value="홈으로가기" /> 
+	</form>
+	<form action="/hssweb/logout" method="post">
+		&nbsp<input type="submit" value="로그아웃" /> 
+	</form>
+	<form action="/hssweb/getUserInfo" method="post">
+		&nbsp<input type="submit" value="회원정보보기"/><br><br>
+		&nbsp <%=session.getAttribute("userID")%>님 안녕하세요. 로그인 되셨습니다.
+	</form>
+</p>	
+<hr />
+
+<%
+	// false를 받았을 경우 (로그인 안된 상태)
+	} else {
+%>
+
+<p>
+	<form action="/hssweb/etc" method="post">
+		&nbsp<input type="submit" value="홈으로가기" /> 
+	</form>
+	<form action="/hssweb/login" method="post">
+		&nbsp<input type="submit" value="로그인" /> 
+	</form>
+	<form action="/hssweb/register" method="post">
+		&nbsp<input type="submit" value="회원가입"/><br><br>
+		&nbsp 로그인 또는 회원가입을 해주세요.
+	</form>
+</p>	
+<hr />
+
+<%
+	}
+%>
+
+</body>
+</html>
