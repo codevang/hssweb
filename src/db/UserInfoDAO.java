@@ -39,8 +39,8 @@ public class UserInfoDAO {
 				// 존재하지 않는 경우 등록
 			} else if (check == Ctrl.FALSE) {
 
-				preStmt = conn.prepareStatement
-					("insert into ORG_USER values (?,?,?,?,?,?)");
+				preStmt = conn.prepareStatement(
+						"insert into ORG_USER values (?,?,?,?,?,?)");
 				preStmt.setString(1, dto.getUserID());
 				preStmt.setString(2, dto.getUserPW());
 				preStmt.setString(3, dto.getUserName());
@@ -84,14 +84,15 @@ public class UserInfoDAO {
 			stmt = conn.createStatement();
 			String userID = request.getParameter("userID");
 			String userPW = request.getParameter("userPW");
-			String query = "select userID, userPW from ORG_USER " 
-						+ "where userID = " + "'" + userID + "'";
+			String query = "select userID, userPW from ORG_USER "
+					+ "where userID = " + "'" + userID + "'";
 			result = stmt.executeQuery(query);
 
 			// 있으면 TRUE
 			while (result.next()) {
-				if (result.getString("USERID").equals(userID) 
-						&& result.getString("USERPW").equals(userPW)) {
+				if (result.getString("USERID").equals(userID)
+						&& result.getString("USERPW")
+								.equals(userPW)) {
 					return Ctrl.TRUE;
 				}
 			}
@@ -116,8 +117,8 @@ public class UserInfoDAO {
 			HttpSession session = request.getSession();
 			dbConnect();
 			stmt = conn.createStatement();
-			String query = "select * from ORG_USER where userID = " 
-						+ "'" + session.getAttribute("userID") + "'";
+			String query = "select * from ORG_USER where userID = "
+					+ "'" + session.getAttribute("userID") + "'";
 			result = stmt.executeQuery(query);
 
 			UserInfoDTO dto = new UserInfoDTO();
@@ -149,8 +150,8 @@ public class UserInfoDAO {
 
 		// DB 연결
 		dbConnect();
-		String query = "select userID from ORG_USER " 
-			+ "where userID = " + "'" + dto.getUserID() + "'";
+		String query = "select userID from ORG_USER "
+				+ "where userID = " + "'" + dto.getUserID() + "'";
 		result = stmt.executeQuery(query);
 
 		// userID가 있다면
@@ -177,8 +178,8 @@ public class UserInfoDAO {
 	private void dbConnect() throws Exception {
 
 		context = new InitialContext();
-		datasource = (DataSource) context.lookup
-				("java:comp/env/jdbc/Oracle11g");
+		datasource = (DataSource) context
+				.lookup("java:comp/env/jdbc/Oracle11g");
 		conn = datasource.getConnection();
 		conn.setAutoCommit(false); // 오토커밋 해제
 		stmt = conn.createStatement();

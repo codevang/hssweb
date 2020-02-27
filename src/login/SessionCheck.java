@@ -20,7 +20,6 @@ public class SessionCheck {
 				// userID라는 이름을 가진 쿠키가 있다면 true 반환
 				if (cookie[i].getName().equals("userID")) {
 					
-					System.out.println(cookie[i].getPath());
 					// 쿠키에 들어있는 userID를 세션에 추가해줌
 					session.setAttribute("userID", cookie[i].getValue());
 					return true;

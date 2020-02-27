@@ -40,9 +40,7 @@ public class Ctrl extends HttpServlet {
 			throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		// 프로젝트 이름 뒤의 URI만 남기도록 잘라줌 (프로젝트/페이지 - 프로젝트 = /페이지)
-		String uri = request.getRequestURI().substring
-				(request.getContextPath().length());
+		String uri = request.getRequestURI();
 		
 		String page = null;  // 리다이렉트할 페이지 넣을 문자열
 		Command command = null; // 실행할 커멘드 클래스를 담아줄 인터페이스 객체 
@@ -116,6 +114,6 @@ public class Ctrl extends HttpServlet {
 			page = "/main.jsp";
 		}
 		
-		response.sendRedirect("/hssweb" + page);
+		response.sendRedirect(page);
 	}
 }

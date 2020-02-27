@@ -2,14 +2,13 @@
 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
 <body>
 	
-<!-- 헤드 레이아웃 include -->
-<jsp:include page = "/layout/headLayout.jspf" flush = "false"/>
+<!-- top 레이아웃 include -->
+<jsp:include page = "/layout/topLayout.jspf" flush = "false"/>
+
+<!-- bottom 레이아웃 include -->
+<jsp:include page = "/layout/bottomLayout.jspf" flush = "false"/>
 	
 </body>
 </html>
