@@ -61,11 +61,11 @@
 				<div class="list-group mb-4">
 					<a
 						class="list-group-item list-group-item-info text-center font-weight-bold border border-dark">게시판</a>
-					<a href="#"
-						class="list-group-item list-group-item-action text-center font-weight-bold border border-dark">일상
-						공유</a> <a href="#"
-						class="list-group-item list-group-item-action text-center font-weight-bold border border-dark">코딩
-						공유</a>
+					<a href="/boardChat?requestedPage=1"
+						class="list-group-item list-group-item-action text-center font-weight-bold border border-dark">
+						일반 게시판</a> <a href="#"
+						class="list-group-item list-group-item-action text-center font-weight-bold border border-dark">
+						코딩 게시판</a>
 				</div>
 
 			</div>

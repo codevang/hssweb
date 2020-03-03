@@ -91,8 +91,7 @@ public class UserInfoDAO {
 			// 있으면 TRUE
 			while (result.next()) {
 				if (result.getString("USERID").equals(userID)
-						&& result.getString("USERPW")
-								.equals(userPW)) {
+						&& result.getString("USERPW").equals(userPW)) {
 					return Ctrl.TRUE;
 				}
 			}
@@ -117,8 +116,8 @@ public class UserInfoDAO {
 			HttpSession session = request.getSession();
 			dbConnect();
 			stmt = conn.createStatement();
-			String query = "select * from ORG_USER where userID = "
-					+ "'" + session.getAttribute("userID") + "'";
+			String query = "select * from ORG_USER where userID = " + "'"
+					+ session.getAttribute("userID") + "'";
 			result = stmt.executeQuery(query);
 
 			UserInfoDTO dto = new UserInfoDTO();
@@ -150,8 +149,9 @@ public class UserInfoDAO {
 
 		// DB 연결
 		dbConnect();
-		String query = "select userID from ORG_USER "
-				+ "where userID = " + "'" + dto.getUserID() + "'";
+		String query = "select userID from ORG_USER " + "where userID = " + "'"
+				+ dto.getUserID() + "'";
+		stmt = conn.createStatement();
 		result = stmt.executeQuery(query);
 
 		// userID가 있다면
@@ -160,16 +160,6 @@ public class UserInfoDAO {
 
 			// userID가 없다면
 		} else {
-
-			// 자원해제 (호출한 메소드에서 result 필드를 재사용할 것이므로)
-			if (result != null) {
-				try {
-					result.close();
-				} catch (Exception resultCloseEx) {
-					resultCloseEx.printStackTrace();
-				}
-			}
-
 			return Ctrl.FALSE;
 		}
 	}
@@ -182,7 +172,6 @@ public class UserInfoDAO {
 				.lookup("java:comp/env/jdbc/Oracle11g");
 		conn = datasource.getConnection();
 		conn.setAutoCommit(false); // 오토커밋 해제
-		stmt = conn.createStatement();
 	}
 
 	/* DB close (모든 객체 자원 해제) */

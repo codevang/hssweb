@@ -1,74 +1,38 @@
 package board;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import control.Command;
 import control.Ctrl;
+import db.BoardDAO;
 
 public class BoardList implements Command {
 
+	// 한 화면에 보여줄 리스트 갯수, 페이징 범위의 갯수
+	public static final int pagePerList = 10;
+	public static final int pagingCount = 10;
+
 	HttpServletRequest request;
-	HttpSession session;
-	private int totalContents; // 총 게시물 수
-	private int listCount; // 한 페이지에 출력할 갯수
-	private int totalPage; // 전체 페이지 수
-	private int startNum; // 시작 페이지
-	private int endNum; // 끝 페이지
-	private int currentPage; // 사용자가 요청한 페이지 번호
 
 	public BoardList(HttpServletRequest request) {
 		this.request = request;
-		this.session = request.getSession();
 
 	}
 
 	@Override
 	public int execute() {
-		return Ctrl.TRUE;	// 작성중
-	}
 
-	private int paging() {
-
-		// 사용자에게 요청온 페이지 정보와, 한 페이지에 출력할 게시물 갯수
-		currentPage = Integer.parseInt(request.getParameter("page"));
-		listCount = 10;
-
-		// DB에서 받아온 총 게시물 수가 하나 이상일 때 (테스트 데이터)
-		totalContents = 1016;
-
-		if (totalContents > 0) {
-
-			// 전체 페이지는 "전체 게시물 수 / 한페이지에 출력할 갯수"
-			// 나머지가 있다면 1페이지 추가
-			totalPage = (totalContents / listCount);
-			if (totalContents % listCount > 0) {
-				totalPage++;
-			}
-
-			// 출력해줄 페이지 범위 지정
-			startNum = ((currentPage - 1) / 10) * 10 + 1;
-			endNum = startNum + listCount - 1;
-			// 마지막 페이징 범위에서 끝 페이지 갯수 조정
-			if (endNum > totalPage) {
-				endNum = totalPage;
-			}
-
-			// 페이징 범위를 배열로 만듦
-			ArrayList<Integer> temp = new ArrayList<>();
-			for (int i = startNum; i <= endNum; i++) {
-				temp.add(i);
-			}
-
-			Integer[] paging = temp.toArray(new Integer[temp.size()]);
-			session.setAttribute("paging", paging);
-			return Ctrl.TRUE;
-
-			// 게시물이 하나도 없을 경우
+		// 요청받은 페이지
+		int page = Integer.parseInt(request.getParameter("requestedPage"));
+		BoardDAO dao = new BoardDAO(request);
+		int result = dao.readList(page);
+		if (result == Ctrl.TRUE) {
+			return result;
+		} else if (result == Ctrl.FALSE) {
+			request.setAttribute("bdListMsg", "등록된 게시물이 없습니다.");
+			return result;
 		} else {
-			return Ctrl.FALSE;
+			return result;
 		}
 	}
 }
